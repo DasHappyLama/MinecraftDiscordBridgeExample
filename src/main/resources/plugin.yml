@@ -1,0 +1,11 @@
+name: MinecraftDiscordBridgeExample
+version: ${project.version}
+main: de.dashappylama.minecraftdiscordbridge.MinecraftDiscordBridgeExample
+api-version: 1.16
+authors: [ Happy_Lama_ ]
+website: dashappylama.de
+
+commands:
+  mdbe:
+    description: Der Hauptbefehl des Plugins.
+
