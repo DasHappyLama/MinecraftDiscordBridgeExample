@@ -86,13 +86,13 @@ public final class MinecraftDiscordBridgeExample extends JavaPlugin {
     private void startBot() {
         try {
 
-            this.builder = new DefaultShardManagerBuilder();
+            this.builder =  DefaultShardManagerBuilder.createDefault(Config.getYamlConfiguration().getString("bot.token"));
 
 
 
 
             this.builder.setBulkDeleteSplittingEnabled(false);
-            this.builder.setToken(Config.getYamlConfiguration().getString("bot.token"));
+//            this.builder.setToken(Config.getYamlConfiguration().getString("bot.token"));
 
 
             this.builder.addEventListeners(new MessageReceivedListener());
