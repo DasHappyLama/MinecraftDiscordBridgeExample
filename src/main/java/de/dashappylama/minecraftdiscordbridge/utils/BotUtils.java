@@ -21,6 +21,7 @@ public class BotUtils {
         this.botStarted = timestamp;
     }
 
+    @SuppressWarnings("unused")
     public Timestamp getBotStarted() {
         return this.botStarted;
     }

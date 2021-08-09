@@ -14,6 +14,7 @@ public class MessageConfig {
     private static YamlConfiguration yamlConfiguration;
 
 
+    @SuppressWarnings("all")
     public static void existAndCreate() {
         if (!folder.exists()) {
             folder.mkdirs();
@@ -34,6 +35,7 @@ public class MessageConfig {
         yamlConfiguration = YamlConfiguration.loadConfiguration(config);
     }
 
+    @SuppressWarnings("unused")
     public static YamlConfiguration getYamlConfiguration() {
         return yamlConfiguration;
     }
@@ -47,6 +49,7 @@ public class MessageConfig {
         }
     }
 
+    @SuppressWarnings("all")
     public static String getMessage(String messageName) {
         if (yamlConfiguration.getString("messages." + messageName) != null) {
             return yamlConfiguration.getString("messages." + messageName).replaceAll("&", "§");

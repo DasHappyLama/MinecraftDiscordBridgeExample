@@ -22,9 +22,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.security.auth.login.LoginException;
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.logging.Level;
 
-@SuppressWarnings("deprecation")
 public final class MinecraftDiscordBridgeExample extends JavaPlugin {
 
     private static MinecraftDiscordBridgeExample instance;
@@ -32,8 +32,6 @@ public final class MinecraftDiscordBridgeExample extends JavaPlugin {
     public static MinecraftDiscordBridgeExample getInstance() {
         return instance;
     }
-
-    private DefaultShardManagerBuilder builder;
 
     private ShardManager shardManager;
 
@@ -61,7 +59,7 @@ public final class MinecraftDiscordBridgeExample extends JavaPlugin {
 
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
-            TextChannel textChannel = MinecraftDiscordBridgeExample.getInstance().getShardManager().getTextChannelById(Config.getYamlConfiguration().getString("discord.mcChatID"));
+            TextChannel textChannel = MinecraftDiscordBridgeExample.getInstance().getShardManager().getTextChannelById(Objects.requireNonNull(Config.getYamlConfiguration().getString("discord.mcChatID")));
             if (textChannel == null) {
                 Bukkit.getLogger().log(Level.SEVERE, "Der Minecraft Discord Channel konnte nicht gefunden werden.");
 
@@ -79,33 +77,33 @@ public final class MinecraftDiscordBridgeExample extends JavaPlugin {
         pluginManager.registerEvents(new PlayerQuitListener(), this);
         pluginManager.registerEvents(new AsyncPlayerChatListener(), this);
 
-        getCommand("mdbe").setExecutor(new PluginCommand());
+        Objects.requireNonNull(getCommand("mdbe")).setExecutor(new PluginCommand());
 
     }
 
     private void startBot() {
         try {
 
-            this.builder =  DefaultShardManagerBuilder.createDefault(Config.getYamlConfiguration().getString("bot.token"));
+            DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(Config.getYamlConfiguration().getString("bot.token"));
 
 
 
 
-            this.builder.setBulkDeleteSplittingEnabled(false);
+            builder.setBulkDeleteSplittingEnabled(false);
 //            this.builder.setToken(Config.getYamlConfiguration().getString("bot.token"));
 
 
-            this.builder.addEventListeners(new MessageReceivedListener());
+            builder.addEventListeners(new MessageReceivedListener());
 
 
-            this.builder.setActivity(Activity.streaming("By Happy_Lama_", "dashappylama.de"));
-            this.builder.setAutoReconnect(true);
+            builder.setActivity(Activity.streaming("By Happy_Lama_", "dashappylama.de"));
+            builder.setAutoReconnect(true);
 
-            this.builder.setChunkingFilter(ChunkingFilter.ALL);
-            this.builder.setMemberCachePolicy(MemberCachePolicy.ALL);
-            this.builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
+            builder.setChunkingFilter(ChunkingFilter.ALL);
+            builder.setMemberCachePolicy(MemberCachePolicy.ALL);
+            builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
 
-            this.shardManager = this.builder.build();
+            this.shardManager = builder.build();
 
 
             BotUtils.getInstance().setBotStarted(new Timestamp(System.currentTimeMillis()));
@@ -129,7 +127,7 @@ public final class MinecraftDiscordBridgeExample extends JavaPlugin {
 
 
 
-        TextChannel textChannel = MinecraftDiscordBridgeExample.getInstance().getShardManager().getTextChannelById(Config.getYamlConfiguration().getString("discord.mcChatID"));
+        TextChannel textChannel = MinecraftDiscordBridgeExample.getInstance().getShardManager().getTextChannelById(Objects.requireNonNull(Config.getYamlConfiguration().getString("discord.mcChatID")));
         if (textChannel == null) {
             Bukkit.getLogger().log(Level.SEVERE, "Der Minecraft Discord Channel konnte nicht gefunden werden.");
 

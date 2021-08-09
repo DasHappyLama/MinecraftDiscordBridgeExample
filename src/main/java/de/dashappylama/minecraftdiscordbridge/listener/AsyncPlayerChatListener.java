@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.Objects;
 import java.util.logging.Level;
 
 public class AsyncPlayerChatListener implements Listener {
@@ -20,7 +21,7 @@ public class AsyncPlayerChatListener implements Listener {
         Player player = event.getPlayer();
 
 
-        TextChannel textChannel = MinecraftDiscordBridgeExample.getInstance().getShardManager().getTextChannelById(Config.getYamlConfiguration().getString("discord.mcChatID"));
+        TextChannel textChannel = MinecraftDiscordBridgeExample.getInstance().getShardManager().getTextChannelById(Objects.requireNonNull(Config.getYamlConfiguration().getString("discord.mcChatID")));
         if (textChannel == null) {
             Bukkit.getLogger().log(Level.SEVERE, "Der Minecraft Discord Channel konnte nicht gefunden werden.");
 
